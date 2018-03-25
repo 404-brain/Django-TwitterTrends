@@ -1,0 +1,40 @@
+{% extends 'trends/home.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+{% endblock %}
+<!--                CONTENT 2            -->
+{% block content2 %}
+<div class="container">
+            <h2>{{user_search}}</h2>
+            <h3>Tweets with <b>{{user_search}}</b> hashtag</h3>
+            {% for tweets in tweets_about %}
+            <div id="tweets-about-box">
+                <a href="#" class="user-profile">
+                    <img id="user-img" src="{{tweets.user.profile_image_url}}">
+                    {{tweets.user.name}}
+                    <span style="color:black;"><b>@{{tweets.user.screen_name}}</b></span>
+                </a>
+                {% if tweets.user.verified %}
+                <img id="verified-badge" style="width:20px;" src="static/scrape/img/verified.png">
+                {% endif %}
+                <div id="text-area">
+                    {{tweets.text}}
+                    {{tweets.hashtags}}
+                </div>
+                <hr>
+                <div id="tweets-about-footer">
+                    {{tweets.created_at}} |
+                    {{tweets.retweet_count}} RT |
+                    {{tweets.favorite_count}} Likes
+                </div>
+            </div>
+    {% endfor %}
+{% endblock %}
+</div>
+<!--                ----------             -->
+
+
+
+

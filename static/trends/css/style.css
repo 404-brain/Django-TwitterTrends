@@ -1,0 +1,214 @@
+body {
+  padding-top: 50px;
+}
+
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+            /* =========== NAV BAR ========== */
+
+#navbar img{
+    display: inline-block;
+    width: 25px;
+    height: 20px;
+    padding-right: 8px;
+    padding-bottom: 3px;
+}
+
+#navbar img:hover{
+    opacity: 7;
+}
+
+
+
+            /* =========== TREND BOX ========== */
+
+#trend-box{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 12px;
+    margin-right: 30px;
+    margin-bottom: 25px;
+    height: 95px;
+    width: 185px;
+    display: inline-block;
+    opacity: 1.5;
+    padding-top: 15px;
+    vertical-align: top;
+}
+
+#trend-box span{
+    padding-top: 7px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 12px;
+    text-align: center;
+}
+
+#trend-box:hover{
+    opacity: 7;
+}
+
+#trend-box:active{
+    background-color: black;
+}
+
+#tweet-volume{
+    display: block;
+}
+
+#tweet-volume img{
+    height: 14px;
+    padding-bottom: 3px;
+}
+
+            /* =========== COUNTRY'S ========== */
+
+#country{
+    text-align: center;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+            /* =========== BEST TWEETS BOX ========== */
+
+#best-tweets-box{
+    width: 30%;
+    height: 25%;
+    background-color: #f2f2f2;
+    margin: 10px;
+    border-radius: 4px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#best-tweets-box:hover{
+    background-color: #e6e6e6;
+}
+
+#best-tweets-box a{
+    padding-top: 20px;
+    padding-left: 15px;
+}
+#best-tweets-box span{
+    text-align: center;
+}
+
+#user-profile a{
+    text-decoration: none;
+}
+
+#user-profile span{
+    margin-right: 30px;
+}
+
+#user-name-align{
+    text-align: center;
+}
+
+#verified-badge{
+    float:right;
+}
+
+#user-img{
+    border-radius: 5px;
+    padding-top: 10px;
+}
+
+#best-tweets-box #text-area{
+    border-radius: 2px;
+    padding: 20px 5px 15px 15px;
+    text-align: center;
+    font-family: "Courier New", Courier, monospace;
+}
+
+#best-tweets-footer{
+    padding-top: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+}
+
+.best-tweets-column{
+    height: 30%;
+    width: 150px;
+    color: rgb(242, 242, 242);
+}
+
+
+.container-flex{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+        /* =========== USERS ========== */
+.user-info{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+
+.follow-info{
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+
+.follow-info span{
+    border: solid 1px black;
+    border-radius: 5px;
+    padding: 0px 4px 0px 4px;
+}
+
+#name, #username{
+}
+
+#user-img{
+}
+
+#name, #username, #followers, #following, #favorites{
+    margin-left: 5px;
+}
+
+
+        /* =========== TWEETS ABOUT BOX ========== */
+
+#tweets-about-box{
+    text-align: center;
+    width: 30%;
+    height: 25%;
+    background-color: #f2f2f2;
+    margin: 10px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+#tweets-about-box:hover{
+    background-color: #e6e6e6;
+}
+
+#tweets-about-box a{
+    padding-top: 20px;
+    padding-left: 15px;
+}
+#tweets-about-box span{
+    text-align: center;
+}
+
+#tweets-about-box #text-area{
+    border-radius: 2px;
+    padding: 20px 5px 15px 15px;
+    text-align: center;
+    font-family: "Courier New", Courier, monospace;
+}
+
+#tweets-about-footer{
+    padding-top: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+}

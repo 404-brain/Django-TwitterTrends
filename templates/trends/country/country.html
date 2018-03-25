@@ -1,0 +1,52 @@
+{% extends 'trends/home.html' %}
+{% load static %}
+<!--                NAV BAR             -->
+    {% block nav %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">socim.org</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/"><img src="{% static 'trends/img/house.svg' %}">Home</a></li>
+            <li><a href="/search"><img src="{% static 'trends/img/magnifier.svg' %}">Search</a></li>
+            <li class="active"><a href="/tt"><img src="{% static 'trends/img/arrow3.svg' %}">Trend Topics</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    {% endblock %}
+<!--                ----------             -->
+
+
+{% block content %}
+<div class="container">
+    <h1><strong>{{name}}</strong> Trends</h1>
+    {% for name in country %}
+        {% if '#' in name %}
+            <a href="{% url 'hash' hash_name=name.name %}">
+        {% else %}
+            <a href="{% url 'hash' hash_name=name.name %}">
+        {% endif %}
+        <div id="trend-box" class="label label-{% cycle 'info' 'warning' 'danger' 'success' 'primary'%}">
+            <span>{{name.name}}</span>
+            {% if name.tweet_volume == None %}
+            {% else %}
+            <span id="tweet-volume"><img style="width:20px;" src="{% static 'trends/img/chart.svg' %}">{{ name.tweet_volume }}</span>
+            {% endif %}
+        </div>
+        </a>
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block content2 %}
+{% endblock %}

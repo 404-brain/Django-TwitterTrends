@@ -1,0 +1,74 @@
+{% extends 'trends/home.html' %}
+{% load static %}
+
+<!--                NAV BAR             -->
+    {% block nav %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">socim.org</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/"><img src="{% static 'trends/img/house.svg' %}">Home</a></li>
+            <li><a href="/search"><img src="{% static 'trends/img/magnifier.svg' %}">Search</a></li>
+            <li><a href="/tt"><img src="{% static 'trends/img/magnifier.svg' %}">Trend Topics</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    {% endblock %}
+    <!--                ----------             -->
+
+{% block content %}
+{% for timeline in user_timeline|slice:"1" %}
+    <section class="user-info container">
+        <span id="user-img"><img src="{{timeline.user.profile_image_url}}"></span>
+        <div id="username-info">
+            <span id="name">{{timeline.user.name}}</span>
+            <br>
+            <span id="username"><b>@{{timeline.user.screen_name}}</b></span>
+            {% if timeline.user.verified %}
+            <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
+            {% endif %}
+        </div>
+    </section>
+    <section class="follow-info">
+        <span class="bg-primary" id="followers">Followers: {{timeline.user.followers_count}}</span>
+        <span class="bg-primary" id="following">Following: {{timeline.user.friends_count}}</span>
+        <span class="bg-primary" id="favorites">Favorites: {{timeline.user.favourites_count}}</span>
+    </section>
+{% endfor %}
+{% endblock %}
+
+<!--                LATEST BEST TWEETS            -->
+{% block content2 %}
+<div class="container">
+    {% for timeline in user_timeline %}
+    <div id="best-tweets-box">
+        <div id="text-area">
+            {{timeline.text}}
+            {% if search.hashtags %}
+            <a href=""></a>
+            {% endif %}
+            {% if '#' in search.text %}
+            <a href=""></a>
+            {% endif %}
+        </div>
+        <hr>
+        <div id="best-tweets-footer">
+            {{timeline.created_at}} |
+            {{timline.retweet_count}} RT |
+            {{timeline.favorite_count}} Likes
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+<!--                ----------             -->

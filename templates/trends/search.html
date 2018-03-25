@@ -1,0 +1,42 @@
+{% extends 'trends/home.html' %}
+{% load static %}
+<!--                NAV BAR             -->
+    {% block nav %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">socim.org</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/"><img src="{% static 'trends/img/house.svg' %}">Home</a></li>
+            <li class="active"><a href="/search"><img src="{% static 'trends/img/magnifier.svg' %}">Search</a></li>
+            <li><a href="/tt"><img src="{% static 'trends/img/arrow3.svg' %}">Trend Topics</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    {% endblock %}
+<!--                ----------             -->
+
+{% block content %}
+    <h2>Search On <b>Twitter</b></h2>
+    {% if error %}
+    <p style="color:red;">{{error}}</p>
+    {% endif %}
+    <form method="POST" action="{{user_search}}">
+        {% csrf_token %}
+        <input name="user-search" placeholder="type a @username or #hashtag" style="width:45%;">
+        <br>
+        <button name="button" class="btn btn-primary">search</button>
+    </form>
+{% endblock %}
+
+{% block content2 %}
+{% endblock %}
