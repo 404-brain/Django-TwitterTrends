@@ -50,7 +50,7 @@
 <!--                LATEST BEST TWEETS            -->
 {% block content2 %}
 <div class="container">
-    {% for timeline in user_timeline %}
+    {% for timeline in user_timeline|slice:":30" %}
     <div id="best-tweets-box">
         <div id="text-area">
             {{timeline.text}}
@@ -69,6 +69,55 @@
         </div>
     </div>
     {% endfor %}
-</div>
+
+    <!-- Hide tweets  -->
+    <div id="hide-div">
+        {% for timeline in user_timeline|slice:"30:60" %}
+        <div id="best-tweets-box">
+            <div id="text-area">
+                {{timeline.text}}
+                {% if search.hashtags %}
+                <a href=""></a>
+                {% endif %}
+                {% if '#' in search.text %}
+                <a href=""></a>
+                {% endif %}
+            </div>
+            <hr>
+            <div id="best-tweets-footer">
+                {{timeline.created_at}} |
+                {{timline.retweet_count}} RT |
+                {{timeline.favorite_count}} Likes
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- -->
+
+    <!-- Hide tweets 2  -->
+    <div id="hide-div2">
+        {% for timeline in user_timeline|slice:"60:90" %}
+        <div id="best-tweets-box">
+            <div id="text-area">
+                {{timeline.text}}
+                {% if search.hashtags %}
+                <a href=""></a>
+                {% endif %}
+                {% if '#' in search.text %}
+                <a href=""></a>
+                {% endif %}
+            </div>
+            <hr>
+            <div id="best-tweets-footer">
+                {{timeline.created_at}} |
+                {{timline.retweet_count}} RT |
+                {{timeline.favorite_count}} Likes
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- -->
+    <button class="bg-primary" id="load-btn">Load More</button>
+</div>  <!-- End Container -->
 {% endblock %}
 <!--                ----------             -->
