@@ -59,6 +59,7 @@
 
 
     <!--                INSTANTLY TWITTER TRENDS            -->
+
     <div class="container">
     {% block content %}
       <h1>Instant Twitter Trends</h1>
@@ -80,6 +81,7 @@
         {% endfor %}
     {% endblock %}
     </div>
+
     <!--                ----------             -->
 
 
@@ -87,7 +89,7 @@
     {% block content2 %}
     <div class="container">
         <h1>Latest Best Tweets</h1>
-            {% for search in searches %}
+            {% for search in searches|slice:"0:15" %}
                 <div id="best-tweets-box">
                     <a href="{% url 'users' user_name=search.user.screen_name %}" class="user-profile">
                     <img id="user-img" src="{{search.user.profile_image_url}}">
@@ -117,6 +119,77 @@
                     </div>
                 </div>
             {% endfor %}
+
+            <!-- Hide search -->
+            <div id="hide-div">
+                {% for search in searches|slice:"15:30" %}
+                <div id="best-tweets-box">
+                    <a href="{% url 'users' user_name=search.user.screen_name %}" class="user-profile">
+                    <img id="user-img" src="{{search.user.profile_image_url}}">
+                        <div id="user-name-align">
+                            <span>{{search.user.name}}</span>
+                            <br>
+                            <span style="color:black;"><b>@{{search.user.screen_name}}</b></span>
+                        </div>
+                    </a>
+                        {% if search.user.verified %}
+                        <img id="verified-badge" style="width:20px;" src="static/trends/img/verified.png">
+                        {% endif %}
+                    <div id="text-area">
+                        {{ search.text }}
+                        {% if search.hashtags %}
+                        <a href=""></a>
+                        {% endif %}
+                        {% if '#' in search.text %}
+                        <a href=""></a>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div id="best-tweets-footer">
+                        {{ search.created_at }} |
+                        {{ search.retweet_count }} RT |
+                        {{ search.favorite_count }} Likes
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+            <!--  -->
+
+            <!-- Hide search -->
+            <div id="hide-div2">
+                {% for search in searches|slice:"30:45" %}
+                <div id="best-tweets-box">
+                    <a href="{% url 'users' user_name=search.user.screen_name %}" class="user-profile">
+                    <img id="user-img" src="{{search.user.profile_image_url}}">
+                        <div id="user-name-align">
+                            <span>{{search.user.name}}</span>
+                            <br>
+                            <span style="color:black;"><b>@{{search.user.screen_name}}</b></span>
+                        </div>
+                    </a>
+                        {% if search.user.verified %}
+                        <img id="verified-badge" style="width:20px;" src="static/trends/img/verified.png">
+                        {% endif %}
+                    <div id="text-area">
+                        {{ search.text }}
+                        {% if search.hashtags %}
+                        <a href=""></a>
+                        {% endif %}
+                        {% if '#' in search.text %}
+                        <a href=""></a>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div id="best-tweets-footer">
+                        {{ search.created_at }} |
+                        {{ search.retweet_count }} RT |
+                        {{ search.favorite_count }} Likes
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+            <!--  -->
+        <button class="bg-primary" id="load-btn">Load More</button>
     </div>
     {% endblock %}
     <!--                ----------             -->
@@ -130,6 +203,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static 'trends/js/main.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../../dist/js/bootstrap.min.js"></script>
