@@ -8,10 +8,10 @@ import twitter
 
 # API KEYS
 api = twitter.Api(
-        consumer_key='SCwzwLqZ7bQd8AXB4IYByldOy',
-        consumer_secret='U7J4jbFgJJVGJ13FIdM0QCVPyMbIPgkUJEocLFh9Fq6HLFBUwL',
-        access_token_key='790034353-RWl8UKCt29u8hzpw639A02H1sotx1lhUlOBEkHLS',
-        access_token_secret='0b4v5RuFUxvpC8yvfB99B6x8OXB0Zf5DzlJME9UGNkWd2'
+        consumer_key='',
+        consumer_secret='',
+        access_token_key='',
+        access_token_secret=''
     )
 
 
@@ -19,8 +19,8 @@ def home(request):
 
     trends = api.GetTrendsCurrent(exclude=None)
     searches = api.GetSearch(term='moments', raw_query=None, geocode=None, since_id=None,
-                             max_id=None, until=None, since=None, count=30,
-                             lang=None, locale=None, result_type="popular", include_entities=None)
+                             max_id=None, until=None, since=None, count=100,
+                             lang=None, locale=None, result_type="mixed", include_entities=None)
 
     return render(request, 'trends/home.html', {'trends': trends, 'searches': searches})
 
@@ -62,7 +62,7 @@ def search(request):
 
         try:
             tweets_about = api.GetSearch(term=user_search, raw_query=None, geocode=None, since_id=None,
-                                         max_id=None, until=None, since=None, count=16,
+                                         max_id=None, until=None, since=None, count=90,
                                          lang=None, locale=None, result_type="latest", include_entities=None)
             if '#' in user_search:
                 return render(request, 'trends/search/hash-search.html', {'user_search': user_search,
@@ -83,7 +83,7 @@ def search(request):
 def hash(request, hash_name):
 
     tweets = api.GetSearch(term=hash_name, raw_query=None, geocode=None, since_id=None,
-                                 max_id=None, until=None, since=None, count=30,
+                                 max_id=None, until=None, since=None, count=90,
                                  lang=None, locale=None, result_type="latest", include_entities=None)
     if '#' not in hash_name:
         return render(request, 'trends/hashtag/no-hash.html', {'hash': hash_name, 'tweets_about': tweets})
@@ -93,7 +93,7 @@ def hash(request, hash_name):
 def user(request, user_name):
 
     timeline = api.GetUserTimeline(user_id=None, screen_name=user_name, since_id=None,
-                                   max_id=None, count=None, include_rts=True, trim_user=False,
+                                   max_id=None, count=90, include_rts=True, trim_user=False,
                                    exclude_replies=True)
     return render(request, 'trends/user/users.html', {"user": user_name, 'user_timeline': timeline})
 
