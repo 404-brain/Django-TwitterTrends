@@ -1,4 +1,4 @@
-// LOAD BTN 
+// LOAD BTN
 
 let load_btn = document.getElementById("load-btn");
 let hidden_div = document.getElementById("hide-div");
@@ -9,7 +9,6 @@ hidden_div2.style.display = "none";
 
 load_btn.addEventListener("click", first)
 
-// 1rst load click
 function first(e){
     hidden_div.style.display = "";
     e.stopImmediatePropagation();
@@ -17,7 +16,38 @@ function first(e){
     document.onclick = second;
 }
 
-// 2nd load click
 function second(){
     hidden_div2.style.display = "";
 }
+
+// SCROLL BTN
+
+let interval_id = 0;
+let scroll_btn = document.querySelector(".scroll-btn");
+let scrollPos = document.getElementsByTagName("body")[0].scrollTop;
+let trendDiv = document.getElementById("trend-box").offsetTop;
+// Hide scroll btn
+scroll_btn.style.visibility = "hidden";
+
+//on scroll hide/show
+window.onscroll = () =>{
+    if(window.pageYOffset >= 250){
+        scroll_btn.style.visibility = "visible";
+    }else{
+        scroll_btn.style.visibility = "hidden";
+    }
+}
+
+// scroll to top
+function scrollToTop(){
+    interval_id = setInterval(function(){
+        // top of page
+        if(window.pageYOffset === 0){
+            clearInterval(interval_id);
+        }
+        window.scroll(0, window.pageYoOffset);
+    }, 16.66);
+}
+
+// Call scrollToTop on click
+scroll_btn.addEventListener("click", scrollToTop);
