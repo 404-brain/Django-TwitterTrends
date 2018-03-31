@@ -11,14 +11,19 @@
     <h3>Tweets with <b>{{user_search}}</b> hashtag</h3>
     {% for tweets in tweets_about|slice:":30" %}
     <div id="tweets-about-box">
-        <a href="#" class="user-profile">
-            <img id="user-img" src="{{tweets.user.profile_image_url}}">
-            {{tweets.user.name}}
-            <span style="color:black;"><b>@{{tweets.user.screen_name}}</b></span>
+        <a href="{% url 'users' user_name=tweets.user.screen_name %}" class="user-profile">
+            <section class="user-align">
+                <img id="user-img" src="{{tweets.user.profile_image_url}}">
+                <div id="user-name-align">
+                    <span>{{tweets.user.name}}</span>
+                    <br>
+                    <span style="color:black;"><b>@{{tweets.user.screen_name}}</b></span>
+                </div>
+                {% if tweets.user.verified %}
+                <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
+                {% endif %}
+            </section>
         </a>
-        {% if tweets.user.verified %}
-        <img id="verified-badge" style="width:20px;" src="static/scrape/img/verified.png">
-        {% endif %}
         <div id="text-area">
             {{tweets.text}}
             {{tweets.hashtags}}
@@ -38,16 +43,18 @@
         {% for tweets in tweets_about|slice:"30:60" %}
         <div id="best-tweets-box">
             <a href="{% url 'users' user_name=tweets.user.screen_name %}" class="user-profile">
-                <img id="user-img" src="{{tweets.user.profile_image_url}}">
-                <div id="user-name-align">
-                    <span>{{tweets.user.name}}</span>
-                    <br>
-                    <span style="color:black;"><b>@{{tweets.user.screen_name}}</b></span>
-                </div>
+                <section class="user-align">
+                    <img id="user-img" src="{{tweets.user.profile_image_url}}">
+                    <div id="user-name-align">
+                        <span>{{tweets.user.name}}</span>
+                        <br>
+                        <span style="color:black;"><b>@{{tweets.user.screen_name}}</b></span>
+                    </div>
+                    {% if tweets.user.verified %}
+                    <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
+                    {% endif %}
+                </section>
             </a>
-            {% if tweets.user.verified %}
-            <img id="verified-badge" style="width:20px;" src="static/scrape/img/verified.png">
-            {% endif %}
             <div id="text-area">
                 {{tweets.text}}
                 {{tweets.hashtags}}
@@ -68,16 +75,18 @@
         {% for tweets in tweets_about|slice:"60:90" %}
         <div id="best-tweets-box">
             <a href="{% url 'users' user_name=tweets.user.screen_name %}" class="user-profile">
-                <img id="user-img" src="{{tweets.user.profile_image_url}}">
-                <div id="user-name-align">
-                    <span>{{tweets.user.name}}</span>
-                    <br>
-                    <span style="color:black;"><b>@{{tweets.user.screen_name}}</b></span>
-                </div>
+                <section class="user-align">
+                    <img id="user-img" src="{{tweets.user.profile_image_url}}">
+                    <div id="user-name-align">
+                        <span>{{tweets.user.name}}</span>
+                        <br>
+                        <span style="color:black;"><b>@{{tweets.user.screen_name}}</b></span>
+                    </div>
+                    {% if tweets.user.verified %}
+                    <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
+                    {% endif %}
+                </section>
             </a>
-            {% if tweets.user.verified %}
-            <img id="verified-badge" style="width:20px;" src="static/scrape/img/verified.png">
-            {% endif %}
             <div id="text-area">
                 {{tweets.text}}
                 {{tweets.hashtags}}
@@ -96,7 +105,3 @@
 {% endblock %}
 </div>
 <!--                ----------             -->
-
-
-
-
