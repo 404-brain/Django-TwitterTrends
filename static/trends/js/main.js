@@ -24,29 +24,28 @@ function second(){
 
 let interval_id = 0;
 let scroll_btn = document.querySelector(".scroll-btn");
-let scrollPos = document.getElementsByTagName("body")[0].scrollTop;
-let trendDiv = document.getElementById("trend-box").offsetTop;
-// Hide scroll btn
-scroll_btn.style.visibility = "hidden";
 
 //on scroll hide/show
 window.onscroll = () =>{
-    if(window.pageYOffset >= 250){
+    if(window.pageYOffset >= 450){
         scroll_btn.style.visibility = "visible";
-    }else{
+    }else if(window.pageYOffset <= 0){
         scroll_btn.style.visibility = "hidden";
     }
 }
 
 // scroll to top
-function scrollToTop(){
-    interval_id = setInterval(function(){
-        // top of page
-        if(window.pageYOffset === 0){
-            clearInterval(interval_id);
-        }
-        window.scroll(0, window.pageYoOffset);
-    }, 16.66);
+function scrollStep() {
+    // Check if we're at the top already. If so, stop scrolling by clearing the interval
+    if (window.pageYOffset === 0) {
+        clearInterval(interval_id);
+    }
+    window.scroll(0, window.pageYOffset - 50);
+}
+
+function scrollToTop() {
+    // Call the function scrollStep() every 16.66 millisecons
+    interval_id = setInterval(scrollStep, 16.66);
 }
 
 // Call scrollToTop on click
