@@ -1,4 +1,4 @@
-body {
+body{
   padding-top: 50px;
 }
 
@@ -7,6 +7,29 @@ body {
   text-align: center;
 }
 
+.scroll-btn{
+    visibility: hidden;
+    border: 3px solid black;
+    border-radius: 10px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    opacity: 0.7;
+}
+
+.scroll-btn:hover{
+    opacity:1;
+    transition: opacity 0.4s ease-in;
+}
+
+            /* =========== Footer ========== */
+
+.footer{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: block;
+    margin: 0 auto;
+}
 
             /* =========== NAV BAR ========== */
 
@@ -21,8 +44,6 @@ body {
 #navbar img:hover{
     opacity: 7;
 }
-
-
 
             /* =========== TREND BOX ========== */
 
@@ -83,6 +104,13 @@ body {
     vertical-align: top;
 }
 
+@media (max-width:800px){
+    #best-tweets-box{
+    width: 100%;
+    height: 25%;
+    }
+}
+
 #best-tweets-box:hover{
     background-color: #e6e6e6;
 }
@@ -103,12 +131,21 @@ body {
     margin-right: 30px;
 }
 
+.user-align{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 #user-name-align{
+    padding-left: 10px;
     text-align: center;
 }
 
 #verified-badge{
-    float:right;
+    padding-bottom: 20px;
+    float: right;
 }
 
 #user-img{
@@ -152,6 +189,12 @@ body {
     height: 30px;
 }
 
+#hide-div{
+    transition: 0.4s;
+    transition-timing-function: ease-in;
+}
+
+
         /* =========== USERS ========== */
 .user-info{
     margin-top: 10px;
@@ -162,7 +205,8 @@ body {
 }
 
 .follow-info{
-    margin-top: 2px;
+    padding-top: 10px;
+    padding-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content:center;
