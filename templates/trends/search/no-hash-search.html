@@ -23,37 +23,8 @@
     <div class="container">
         <h3>Tweets about <b>{{user_search}}</b></h3>
         <p>Here is the popular tweets for {{user_search}}</p>
-        {% for tweets in tweets_about|slice:":30" %}
-        <div id="tweets-about-box">
-            <a href="{% url 'users' user_name=tweets.user.screen_name %}" class="user-profile">
-                <section class="user-align">
-                    <img id="user-img" src="{{tweets.user.profile_image_url}}">
-                    <div id="user-name-align">
-                        <span>{{tweets.user.name}}</span>
-                        <br>
-                        <span style="color:black;"><b>@{{tweets.user.screen_name}}</b></span>
-                    </div>
-                    {% if tweets.user.verified %}
-                    <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
-                    {% endif %}
-                </section>
-            </a>
-            <div id="text-area">
-                {{tweets.text}}
-                {{tweets.hashtags}}
-            </div>
-            <hr>
-            <div id="tweets-about-footer">
-                {{tweets.created_at}} |
-                {{tweets.retweet_count}} RT |
-                {{tweets.favorite_count}} Likes
-            </div>
-        </div>
-        {% endfor %}
-
-        <!-- hide tweets -->
-        <div id="hide-div">
-            {% for tweets in tweets_about|slice:"30:60" %}
+        <div class="multi-column">
+            {% for tweets in tweets_about|slice:":30" %}
             <div id="tweets-about-box">
                 <a href="{% url 'users' user_name=tweets.user.screen_name %}" class="user-profile">
                     <section class="user-align">
@@ -80,38 +51,73 @@
                 </div>
             </div>
             {% endfor %}
+        </div>
+
+        <!-- hide tweets -->
+        <div id="hide-div">
+            <div class="multi-column">
+                {% for tweets in tweets_about|slice:"30:60" %}
+                <div id="tweets-about-box">
+                    <a href="{% url 'users' user_name=tweets.user.screen_name %}" class="user-profile">
+                        <section class="user-align">
+                            <img id="user-img" src="{{tweets.user.profile_image_url}}">
+                            <div id="user-name-align">
+                                <span>{{tweets.user.name}}</span>
+                                <br>
+                                <span style="color:black;"><b>@{{tweets.user.screen_name}}</b></span>
+                            </div>
+                            {% if tweets.user.verified %}
+                            <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
+                            {% endif %}
+                        </section>
+                    </a>
+                    <div id="text-area">
+                        {{tweets.text}}
+                        {{tweets.hashtags}}
+                    </div>
+                    <hr>
+                    <div id="tweets-about-footer">
+                        {{tweets.created_at}} |
+                        {{tweets.retweet_count}} RT |
+                        {{tweets.favorite_count}} Likes
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
         <!-- -->
 
         <!-- hide tweets 2 -->
         <div id="hide-div2">
-            {% for tweets in tweets_about|slice:"60:90" %}
-            <div id="tweets-about-box">
-                <a href="{% url 'users' user_name=tweets.user.screen_name %}" class="user-profile">
-                    <section class="user-align">
-                        <img id="user-img" src="{{tweets.user.profile_image_url}}">
-                        <div id="user-name-align">
-                            <span>{{tweets.user.name}}</span>
-                            <br>
-                            <span style="color:black;"><b>@{{tweets.user.screen_name}}</b></span>
-                        </div>
-                        {% if tweets.user.verified %}
-                        <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
-                        {% endif %}
-                    </section>
-                </a>
-                <div id="text-area">
-                    {{tweets.text}}
-                    {{tweets.hashtags}}
+            <div class="multi-column">
+                {% for tweets in tweets_about|slice:"60:90" %}
+                <div id="tweets-about-box">
+                    <a href="{% url 'users' user_name=tweets.user.screen_name %}" class="user-profile">
+                        <section class="user-align">
+                            <img id="user-img" src="{{tweets.user.profile_image_url}}">
+                            <div id="user-name-align">
+                                <span>{{tweets.user.name}}</span>
+                                <br>
+                                <span style="color:black;"><b>@{{tweets.user.screen_name}}</b></span>
+                            </div>
+                            {% if tweets.user.verified %}
+                            <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
+                            {% endif %}
+                        </section>
+                    </a>
+                    <div id="text-area">
+                        {{tweets.text}}
+                        {{tweets.hashtags}}
+                    </div>
+                    <hr>
+                    <div id="tweets-about-footer">
+                        {{tweets.created_at}} |
+                        {{tweets.retweet_count}} RT |
+                        {{tweets.favorite_count}} Likes
+                    </div>
                 </div>
-                <hr>
-                <div id="tweets-about-footer">
-                    {{tweets.created_at}} |
-                    {{tweets.retweet_count}} RT |
-                    {{tweets.favorite_count}} Likes
-                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
         <!-- -->
         <button class="bg-primary" id="load-btn">Load More</button>
