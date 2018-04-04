@@ -50,6 +50,7 @@
 <!--                LATEST BEST TWEETS            -->
 {% block content2 %}
 <div class="container">
+    <div class="multi-column">
     {% for timeline in user_timeline|slice:":30" %}
     <div id="best-tweets-box">
         <div id="text-area">
@@ -69,9 +70,11 @@
         </div>
     </div>
     {% endfor %}
+    </div>
 
     <!-- Hide tweets  -->
     <div id="hide-div">
+        <div class="multi-column">
         {% for timeline in user_timeline|slice:"30:60" %}
         <div id="best-tweets-box">
             <div id="text-area">
@@ -91,11 +94,13 @@
             </div>
         </div>
         {% endfor %}
+        </div>
     </div>
     <!-- -->
 
     <!-- Hide tweets 2  -->
     <div id="hide-div2">
+        <div class="multi-column">
         {% for timeline in user_timeline|slice:"60:90" %}
         <div id="best-tweets-box">
             <div id="text-area">
@@ -115,6 +120,7 @@
             </div>
         </div>
         {% endfor %}
+        </div>
     </div>
     <!-- -->
     <button class="bg-primary" id="load-btn">Load More</button>
