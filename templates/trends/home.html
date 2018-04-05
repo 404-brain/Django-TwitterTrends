@@ -9,11 +9,11 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>socim.org</title>
+    <title>Twitter Trends</title>
     {% load static %}
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'trends\css\boot.css' %}" rel="stylesheet">
     <link href="{% static 'trends\css\style.css' %}" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -31,7 +31,6 @@
   </head>
 
   <body>
-
     <!--                NAV BAR             -->
     {% block nav %}
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -43,7 +42,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="">socim.org</a>
+          <a class="navbar-brand" href="">Twitter Trends</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -57,12 +56,11 @@
     {% endblock %}
     <!--                ----------             -->
 
-
     <!--                INSTANTLY TWITTER TRENDS            -->
-
     <div class="container">
     {% block content %}
       <h1>Instant Twitter Trends</h1>
+        {% load humanize %}
         {% for trend in trends|slice:":15" %}
         {% if '#' in trend.name %}
             <a href="{% url 'hash' hash_name=trend.name %}">
@@ -70,10 +68,10 @@
             <a href="{% url 'hash' hash_name=trend.name %}">
         {% endif %}
         <div id="trend-box" class="label label-{% cycle 'info' 'warning' 'danger' 'success' 'primary'%}">
-            <span>{{ trend.name }}</span>
+            <span>{{trend.name}}</span>
             {% if trend.tweet_volume == None %}
             {% else %}
-            <span id="tweet-volume"><img style="width:20px;" src="static/trends/img/chart.svg">{{ trend.tweet_volume }}</span>
+            <span id="tweet-volume"><img style="width:20px;" src="static/trends/img/chart.svg">{{trend.tweet_volume|intcomma}}</span>
             {% endif %}
         </div>
         </a>
@@ -84,131 +82,225 @@
 
     <!--                ----------             -->
 
-
     <!--                LATEST BEST TWEETS            -->
     {% block content2 %}
     <div class="container">
         <h1>Latest Best Tweets</h1>
+        <div class="multi-column">
             {% for search in searches|slice:"0:15" %}
                 <div id="best-tweets-box">
                     <a href="{% url 'users' user_name=search.user.screen_name %}" class="user-profile">
-                    <img id="user-img" src="{{search.user.profile_image_url}}">
-                        <div id="user-name-align">
-                            <span>{{search.user.name}}</span>
-                            <br>
-                            <span style="color:black;"><b>@{{search.user.screen_name}}</b></span>
-                        </div>
+                        <section class="user-align">
+                            <img id="user-img" src="{{search.user.profile_image_url}}">
+                            <div id="user-name-align">
+                                <span>{{search.user.name}}</span>
+                                <br>
+                                <span style="color:black;"><b>@{{search.user.screen_name}}</b></span>
+                            </div>
+                            {% if search.user.verified %}
+                            <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
+                            {% endif %}
+                        </section>
                     </a>
-                        {% if search.user.verified %}
-                        <img id="verified-badge" style="width:20px;" src="static/trends/img/verified.png">
-                        {% endif %}
                     <div id="text-area">
-                        {{ search.text }}
-                        {% if search.hashtags %}
-                        <a href=""></a>
+                        {{search.text}}
+                        <!-- @ link -->
+                        {% if search.user_mentions.0.screen_name %}
+                            {% for screen_names in search.user_mentions %}
+                                <a href="{% url 'users' user_name=screen_names.screen_name %}">
+                                    @{{screen_names.screen_name}}
+                                </a>
+                            {% endfor %}
                         {% endif %}
-                        {% if '#' in search.text %}
-                        <a href=""></a>
+                        <!-- # link -->
+                        {% if search.hashtags.0.text %}
+                            {% for hashtags in search.hashtags %}
+                                <a href="{% url 'hash' hash_name=hashtags.text %}">
+                                    #{{hashtags.text}}
+                                </a>
+                            {% endfor %}
                         {% endif %}
+                        <!-- photo display -->
+                        {% if search.media != 'None' %}
+                            {% if search.media.0.type == 'photo' %}
+                                <img style="width:90%;" src="{{search.media.0.media_url}}">
+                            {% endif %}
+                        {% endif %}
+                        <!-- video/mp4 display -->
+                        {% if search.media != 'None' %}
+                            {% if search.media.0.type == 'video' %}
+                                {% for video_info in search.media.0.video_info.variants %}
+                                    {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
+                                    <iframe id="video" width="90%;" frameborder="0" src="{{video_info.url}}"></iframe>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                        <!--  -->
                     </div>
                     <hr>
                     <div id="best-tweets-footer">
-                        {{ search.created_at }} |
-                        {{ search.retweet_count }} RT |
-                        {{ search.favorite_count }} Likes
+                        {{search.created_at}} |
+                        {{search.retweet_count}} RT |
+                        {{search.favorite_count}} Likes
                     </div>
                 </div>
             {% endfor %}
+        </div>
 
             <!-- Hide search -->
             <div id="hide-div">
-                {% for search in searches|slice:"15:30" %}
-                <div id="best-tweets-box">
-                    <a href="{% url 'users' user_name=search.user.screen_name %}" class="user-profile">
-                    <img id="user-img" src="{{search.user.profile_image_url}}">
-                        <div id="user-name-align">
-                            <span>{{search.user.name}}</span>
-                            <br>
-                            <span style="color:black;"><b>@{{search.user.screen_name}}</b></span>
+                <div class="multi-column">
+                    {% for search in searches|slice:"15:30" %}
+                    <div id="best-tweets-box">
+                        <a href="{% url 'users' user_name=search.user.screen_name %}" class="user-profile">
+                            <section class="user-align">
+                                <img id="user-img" src="{{search.user.profile_image_url}}">
+                                <div id="user-name-align">
+                                    <span>{{search.user.name}}</span>
+                                    <br>
+                                    <span style="color:black;"><b>@{{search.user.screen_name}}</b></span>
+                                </div>
+                                {% if search.user.verified %}
+                                <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
+                                {% endif %}
+                            </section>
+                        </a>
+                        <div id="text-area">
+                            {{search.text}}
+                            <!-- @ link -->
+                            {% if search.user_mentions.0.screen_name %}
+                                {% for screen_names in search.user_mentions %}
+                                    <a href="{% url 'users' user_name=screen_names.screen_name %}">
+                                        @{{screen_names.screen_name}}
+                                    </a>
+                                {% endfor %}
+                            {% endif %}
+                            <!-- # link -->
+                            {% if search.hashtags.0.text %}
+                                {% for hashtags in search.hashtags %}
+                                    <a href="{% url 'hash' hash_name=hashtags.text %}">
+                                        #{{hashtags.text}}
+                                    </a>
+                                {% endfor %}
+                            {% endif %}
+                            <!-- photo display -->
+                            {% if search.media != 'None' %}
+                                {% if search.media.0.type == 'photo' %}
+                                    <img style="width:90%;" src="{{search.media.0.media_url}}">
+                                {% endif %}
+                            {% endif %}
+                            <!-- video/mp4 display -->
+                            {% if search.media != 'None' %}
+                                {% if search.media.0.type == 'video' %}
+                                    {% for video_info in search.media.0.video_info.variants %}
+                                        {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
+                                        <iframe id="video" width="90%;" frameborder="0" src="{{video_info.url}}"></iframe>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
+                            <!--  -->
                         </div>
-                    </a>
-                        {% if search.user.verified %}
-                        <img id="verified-badge" style="width:20px;" src="static/trends/img/verified.png">
-                        {% endif %}
-                    <div id="text-area">
-                        {{ search.text }}
-                        {% if search.hashtags %}
-                        <a href=""></a>
-                        {% endif %}
-                        {% if '#' in search.text %}
-                        <a href=""></a>
-                        {% endif %}
+                        <hr>
+                        <div id="best-tweets-footer">
+                            <p>{{search.created_at}} |
+                            {{search.retweet_count}} RT |
+                                {{search.favorite_count}} Likes</p>
+                        </div>
                     </div>
-                    <hr>
-                    <div id="best-tweets-footer">
-                        {{ search.created_at }} |
-                        {{ search.retweet_count }} RT |
-                        {{ search.favorite_count }} Likes
-                    </div>
+                {% endfor %}
                 </div>
-            {% endfor %}
             </div>
             <!--  -->
 
             <!-- Hide search -->
             <div id="hide-div2">
-                {% for search in searches|slice:"30:45" %}
-                <div id="best-tweets-box">
-                    <a href="{% url 'users' user_name=search.user.screen_name %}" class="user-profile">
-                    <img id="user-img" src="{{search.user.profile_image_url}}">
-                        <div id="user-name-align">
-                            <span>{{search.user.name}}</span>
-                            <br>
-                            <span style="color:black;"><b>@{{search.user.screen_name}}</b></span>
+                <div class="multi-column">
+                    {% for search in searches|slice:"30:45" %}
+                    <div id="best-tweets-box">
+                        <a href="{% url 'users' user_name=search.user.screen_name %}" class="user-profile">
+                            <section class="user-align">
+                                <img id="user-img" src="{{search.user.profile_image_url}}">
+                                <div id="user-name-align">
+                                    <span>{{search.user.name}}</span>
+                                    <br>
+                                    <span style="color:black;"><b>@{{search.user.screen_name}}</b></span>
+                                </div>
+                                {% if search.user.verified %}
+                                <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
+                                {% endif %}
+                            </section>
+                        </a>
+                        <div id="text-area">
+                            {{search.text}}
+                            <!-- @ link -->
+                            {% if search.user_mentions.0.screen_name %}
+                                {% for screen_names in search.user_mentions %}
+                                    <a href="{% url 'users' user_name=screen_names.screen_name %}">
+                                        @{{screen_names.screen_name}}
+                                    </a>
+                                {% endfor %}
+                            {% endif %}
+                            <!-- # link -->
+                            {% if search.hashtags.0.text %}
+                                {% for hashtags in search.hashtags %}
+                                    <a href="{% url 'hash' hash_name=hashtags.text %}">
+                                        #{{hashtags.text}}
+                                    </a>
+                                {% endfor %}
+                            {% endif %}
+                            <!-- photo display -->
+                            {% if search.media != 'None' %}
+                                {% if search.media.0.type == 'photo' %}
+                                    <img style="width:90%;" src="{{search.media.0.media_url}}">
+                                {% endif %}
+                            {% endif %}
+                            <!-- video/mp4 display -->
+                            {% if search.media != 'None' %}
+                                {% if search.media.0.type == 'video' %}
+                                    {% for video_info in search.media.0.video_info.variants %}
+                                        {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
+                                        <iframe id="video" width="90%;" frameborder="0" src="{{video_info.url}}"></iframe>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
+                            <!--  -->
                         </div>
-                    </a>
-                        {% if search.user.verified %}
-                        <img id="verified-badge" style="width:20px;" src="static/trends/img/verified.png">
-                        {% endif %}
-                    <div id="text-area">
-                        {{ search.text }}
-                        {% if search.hashtags %}
-                        <a href=""></a>
-                        {% endif %}
-                        {% if '#' in search.text %}
-                        <a href=""></a>
-                        {% endif %}
+                        <hr>
+                        <div id="best-tweets-footer">
+                            {{ search.created_at }} |
+                            {{ search.retweet_count }} RT |
+                            {{ search.favorite_count }} Likes
+                        </div>
                     </div>
-                    <hr>
-                    <div id="best-tweets-footer">
-                        {{ search.created_at }} |
-                        {{ search.retweet_count }} RT |
-                        {{ search.favorite_count }} Likes
-                    </div>
-                </div>
             {% endfor %}
+                </div>
             </div>
+    </div>
             <!--  -->
         <button class="bg-primary" id="load-btn">Load More</button>
     </div>
     {% endblock %}
     <!--                ----------             -->
 
+    <!--                Scroll Btn             -->
+    <button class="scroll-btn">
+        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+    </button>
+    <!--                ----------             -->
+
     <hr>
-    <footer>
-        © 2017 socim.org
+    {% block footer %}
+    <footer class="footer">
+        Made By <a href="">Ty Knott</a> with
     </footer>
+    {% endblock %}
 
     {% block js %}
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="{% static 'trends/js/main.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
     {% endblock %}
   </body>
 </html>
