@@ -50,7 +50,39 @@
             </a>
             <div id="text-area">
                 {{tweets.text}}
-                {{tweets.hashtags}}
+                <!-- @ link -->
+                {% if tweets.user_mentions.0.screen_name %}
+                    {% for screen_names in tweets.user_mentions %}
+                        <a href="{% url 'users' user_name=screen_names.screen_name %}">
+                            @{{screen_names.screen_name}}
+                        </a>
+                    {% endfor %}
+                {% endif %}
+                <!-- # link -->
+                {% if tweets.hashtags.0.text %}
+                    {% for hashtags in tweets.hashtags %}
+                        <a href="{% url 'hash' hash_name=hashtags.text %}">
+                            #{{hashtags.text}}
+                        </a>
+                    {% endfor %}
+                {% endif %}
+                <!-- photo display -->
+                {% if tweets.media != 'None' %}
+                    {% if tweets.media.0.type == 'photo' %}
+                        <img style="width:90%;" src="{{tweets.media.0.media_url}}">
+                    {% endif %}
+                {% endif %}
+                <!-- video/mp4 display -->
+                {% if tweets.media != 'None' %}
+                    {% if tweets.media.0.type == 'video' %}
+                        {% for video_info in tweets.media.0.video_info.variants %}
+                            {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
+                                <iframe id="video" width="90%;" frameborder="0" src="{{video_info.url}}"></iframe>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+                <!--  -->
             </div>
             <hr>
             <div id="tweets-about-footer">
@@ -82,7 +114,39 @@
                 </a>
                 <div id="text-area">
                     {{tweets.text}}
-                    {{tweets.hashtags}}
+                    <!-- @ link -->
+                    {% if tweets.user_mentions.0.screen_name %}
+                        {% for screen_names in tweets.user_mentions %}
+                            <a href="{% url 'users' user_name=screen_names.screen_name %}">
+                                @{{screen_names.screen_name}}
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                    <!-- # link -->
+                    {% if tweets.hashtags.0.text %}
+                        {% for hashtags in tweets.hashtags %}
+                            <a href="{% url 'hash' hash_name=hashtags.text %}">
+                                #{{hashtags.text}}
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                    <!-- photo display -->
+                    {% if tweets.media != 'None' %}
+                        {% if tweets.media.0.type == 'photo' %}
+                            <img style="width:90%;" src="{{tweets.media.0.media_url}}">
+                        {% endif %}
+                    {% endif %}
+                    <!-- video/mp4 display -->
+                    {% if tweets.media != 'None' %}
+                        {% if tweets.media.0.type == 'video' %}
+                            {% for video_info in tweets.media.0.video_info.variants %}
+                                {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
+                                    <iframe id="video" width="90%;" frameborder="0" src="{{video_info.url}}"></iframe>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                    <!--  -->
                 </div>
                 <hr>
                 <div id="tweets-about-footer">
@@ -115,7 +179,39 @@
                 </a>
                 <div id="text-area">
                     {{tweets.text}}
-                    {{tweets.hashtags}}
+                    <!-- @ link -->
+                    {% if tweets.user_mentions.0.screen_name %}
+                        {% for screen_names in tweets.user_mentions %}
+                            <a href="{% url 'users' user_name=screen_names.screen_name %}">
+                                @{{screen_names.screen_name}}
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                    <!-- # link -->
+                    {% if tweets.hashtags.0.text %}
+                        {% for hashtags in tweets.hashtags %}
+                            <a href="{% url 'hash' hash_name=hashtags.text %}">
+                                #{{hashtags.text}}
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                    <!-- photo display -->
+                    {% if tweets.media != 'None' %}
+                        {% if tweets.media.0.type == 'photo' %}
+                            <img style="width:90%;" src="{{tweets.media.0.media_url}}">
+                        {% endif %}
+                    {% endif %}
+                    <!-- video/mp4 display -->
+                    {% if tweets.media != 'None' %}
+                        {% if tweets.media.0.type == 'video' %}
+                            {% for video_info in tweets.media.0.video_info.variants %}
+                                {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
+                                    <iframe id="video" width="90%;" frameborder="0" src="{{video_info.url}}"></iframe>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                    <!--  -->
                 </div>
                 <hr>
                 <div id="tweets-about-footer">
@@ -132,4 +228,3 @@
 {% endblock %}
 </div>  <!--container end-->
 <!--                ----------             -->
-
