@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from django.http import Http404
 from django.template import loader, Template, RequestContext
+
 import twitter
 
 
@@ -22,14 +23,15 @@ def home(request):
                              max_id=None, until=None, since=None, count=100,
                              lang=None, locale=None, result_type="mixed", include_entities=None)
 
-    return render(request, 'trends/home.html', {'trends': trends, 'searches': searches})
+    return render(request, 'trends/home.html', {'trends': trends,
+                                                'searches': searches})
 
 
 def get_global_trends(request):
 
     ''' Gets current trends globally '''
 
-
+    # countries and their id 
     countries = {'Algeria':23424740,'Argentina':23424747,'Australia':23424748,'Austria':23424750,'Belarus':23424765,
                'Belgium':23424757,'Brazil':23424768,'Canada':23424775,'Chile':23424782,'Colombia':23424787,'Dominican Republic':23424800,
                'Ecuador':23424801,'Egypt':23424802,'France':23424819,'Germany':23424829,'Ghana':23424824,'Greece':23424833,'Guatemala':23424834,
@@ -50,7 +52,8 @@ def get_global_trends(request):
 def country(request, name, id):
 
     woid_trends = api.GetTrendsWoeid(woeid=id, exclude=None)
-    return render(request, 'trends/country/country.html', {'country': woid_trends, 'name': name})
+    return render(request, 'trends/country/country.html', {'country': woid_trends,
+                                                           'name': name})
 
 
 def search(request):
@@ -69,9 +72,8 @@ def search(request):
                                                                         'tweets_about': tweets_about})
             elif not '#' in user_search:
                 user_sug = api.GetUsersSearch(term=user_search, page=1, count=16, include_entities=None)
-                for users in user_sug:
-                    return render(request, 'trends/search/no-hash-search.html', {'user_search': user_search,
-                                                                             'user_sug': users,
+                return render(request, 'trends/search/no-hash-search.html', {'user_search': user_search,
+                                                                             'user_sug': user_sug,
                                                                              'tweets_about': tweets_about})
         except Exception:
             error_message = 'Invalid input or user is private....'
@@ -86,8 +88,10 @@ def hash(request, hash_name):
                                  max_id=None, until=None, since=None, count=90,
                                  lang=None, locale=None, result_type="latest", include_entities=None)
     if '#' not in hash_name:
-        return render(request, 'trends/hashtag/no-hash.html', {'hash': hash_name, 'tweets_about': tweets})
-    return render(request, 'trends/hashtag/hash.html', {'hash': hash_name, 'tweets_about': tweets})
+        return render(request, 'trends/hashtag/no-hash.html', {'hash': hash_name,
+                                                               'tweets_about': tweets})
+    return render(request, 'trends/hashtag/hash.html', {'hash': hash_name,
+                                                        'tweets_about': tweets})
 
 
 def user(request, user_name):
@@ -95,8 +99,5 @@ def user(request, user_name):
     timeline = api.GetUserTimeline(user_id=None, screen_name=user_name, since_id=None,
                                    max_id=None, count=90, include_rts=True, trim_user=False,
                                    exclude_replies=True)
-    return render(request, 'trends/user/users.html', {"user": user_name, 'user_timeline': timeline})
-
-
-
-
+    return render(request, 'trends/user/users.html', {"user": user_name,
+                                                      'user_timeline': timeline})
