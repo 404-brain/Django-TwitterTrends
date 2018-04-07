@@ -1,5 +1,5 @@
 {% extends 'trends/home.html' %}
-{% load staticfiles %}
+{% load static %}
 
 <!--                CONTAINER LEFT | USERS           -->
     <div class="container">
@@ -13,7 +13,18 @@
                 </a>
             </div>
         </div>
-{% endblock %}
+        <section class="user-info container">
+            <span id="user-img"><img src="{{user_sug.profile_image_url}}"></span>
+            <div id="username-info">
+                <span id="name">{{user_sug.name}}</span>
+                <br>
+                <span id="username"><b>@{{user_sug.screen_name}}</b></span>
+                {% if user_sug.verified %}
+                <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
+                {% endif %}
+            </div>
+        </section>
+    {% endblock %}
     </div>
 <!--                ----------             -->
 
@@ -41,7 +52,42 @@
                 </a>
                 <div id="text-area">
                     {{tweets.text}}
-                    {{tweets.hashtags}}
+                    <!-- @ link -->
+                    {% if tweets.user_mentions.0.screen_name %}
+                        {% for screen_names in tweets.user_mentions %}
+                            <a href="{% url 'users' user_name=screen_names.screen_name %}">
+                                @{{screen_names.screen_name}}
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                    <!-- # link -->
+                    {% if tweets.hashtags.0.text %}
+                        {% for hashtags in tweets.hashtags %}
+                            <a href="{% url 'hash' hash_name=hashtags.text %}">
+                                #{{hashtags.text}}
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                    <!-- photo display -->
+                    {% if tweets.media != 'None' %}
+                        {% if tweets.media.0.type == 'photo' %}
+                            <img style="width:90%;" src="{{tweets.media.0.media_url}}">
+                        {% endif %}
+                    {% endif %}
+                    <!-- video/mp4 display -->
+                    {% if tweets.media != 'None' %}
+                        {% if tweets.media.0.type == 'video' %}
+                            {% for video_info in tweets.media.0.video_info.variants %}
+                                {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
+                                    <video width="90%" height="240" controls>
+                                        <source src="{{video_info.url}}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                    <!--  -->
                 </div>
                 <hr>
                 <div id="tweets-about-footer">
@@ -73,7 +119,42 @@
                     </a>
                     <div id="text-area">
                         {{tweets.text}}
-                        {{tweets.hashtags}}
+                        <!-- @ link -->
+                        {% if tweets.user_mentions.0.screen_name %}
+                            {% for screen_names in tweets.user_mentions %}
+                                <a href="{% url 'users' user_name=screen_names.screen_name %}">
+                                    @{{screen_names.screen_name}}
+                                </a>
+                            {% endfor %}
+                        {% endif %}
+                        <!-- # link -->
+                        {% if tweets.hashtags.0.text %}
+                            {% for hashtags in tweets.hashtags %}
+                                <a href="{% url 'hash' hash_name=hashtags.text %}">
+                                    #{{hashtags.text}}
+                                </a>
+                            {% endfor %}
+                        {% endif %}
+                        <!-- photo display -->
+                        {% if tweets.media != 'None' %}
+                            {% if tweets.media.0.type == 'photo' %}
+                                <img style="width:90%;" src="{{tweets.media.0.media_url}}">
+                            {% endif %}
+                        {% endif %}
+                        <!-- video/mp4 display -->
+                        {% if tweets.media != 'None' %}
+                            {% if tweets.media.0.type == 'video' %}
+                                {% for video_info in tweets.media.0.video_info.variants %}
+                                    {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
+                                    <video width="90%" height="240" controls>
+                                        <source src="{{video_info.url}}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                        <!--  -->
                     </div>
                     <hr>
                     <div id="tweets-about-footer">
@@ -107,7 +188,42 @@
                     </a>
                     <div id="text-area">
                         {{tweets.text}}
-                        {{tweets.hashtags}}
+                        <!-- @ link -->
+                        {% if tweets.user_mentions.0.screen_name %}
+                            {% for screen_names in tweets.user_mentions %}
+                                <a href="{% url 'users' user_name=screen_names.screen_name %}">
+                                    @{{screen_names.screen_name}}
+                                </a>
+                            {% endfor %}
+                        {% endif %}
+                        <!-- # link -->
+                        {% if tweets.hashtags.0.text %}
+                            {% for hashtags in tweets.hashtags %}
+                                <a href="{% url 'hash' hash_name=hashtags.text %}">
+                                    #{{hashtags.text}}
+                                </a>
+                            {% endfor %}
+                        {% endif %}
+                        <!-- photo display -->
+                        {% if tweets.media != 'None' %}
+                            {% if tweets.media.0.type == 'photo' %}
+                                <img style="width:90%;" src="{{tweets.media.0.media_url}}">
+                            {% endif %}
+                        {% endif %}
+                        <!-- video/mp4 display -->
+                        {% if tweets.media != 'None' %}
+                            {% if tweets.media.0.type == 'video' %}
+                                {% for video_info in tweets.media.0.video_info.variants %}
+                                    {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
+                                    <video width="90%" height="240" controls>
+                                        <source src="{{video_info.url}}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                        <!--  -->
                     </div>
                     <hr>
                     <div id="tweets-about-footer">
