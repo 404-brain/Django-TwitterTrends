@@ -54,7 +54,10 @@
                     {% if tweets.media.0.type == 'video' %}
                         {% for video_info in tweets.media.0.video_info.variants %}
                             {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
-                                <iframe id="video" width="90%;" frameborder="0" src="{{video_info.url}}"></iframe>
+                            <video width="90%" height="240" controls>
+                                <source src="{{video_info.url}}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -119,7 +122,10 @@
                         {% if tweets.media.0.type == 'video' %}
                             {% for video_info in tweets.media.0.video_info.variants %}
                                 {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
-                                    <iframe id="video" width="90%;" frameborder="0" src="{{video_info.url}}"></iframe>
+                                <video width="90%" height="240" controls>
+                                    <source src="{{video_info.url}}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
@@ -185,7 +191,10 @@
                         {% if tweets.media.0.type == 'video' %}
                             {% for video_info in tweets.media.0.video_info.variants %}
                                 {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
-                                    <iframe id="video" width="90%;" frameborder="0" src="{{video_info.url}}"></iframe>
+                                <video width="90%" height="240" controls>
+                                    <source src="{{video_info.url}}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
