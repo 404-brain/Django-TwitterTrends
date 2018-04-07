@@ -7,7 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="">
 
     <title>Twitter Trends</title>
     {% load static %}
@@ -131,7 +131,11 @@
                             {% if search.media.0.type == 'video' %}
                                 {% for video_info in search.media.0.video_info.variants %}
                                     {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
-                                    <iframe id="video" width="90%;" frameborder="0" src="{{video_info.url}}"></iframe>
+                                    <video width="90%" height="240" controls>
+                                        <source src="{{video_info.url}}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <!--<iframe id="video" width="90%;" frameborder="0" src="{{video_info.url}}"></iframe>-->
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
@@ -195,7 +199,10 @@
                                 {% if search.media.0.type == 'video' %}
                                     {% for video_info in search.media.0.video_info.variants %}
                                         {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
-                                        <iframe id="video" width="90%;" frameborder="0" src="{{video_info.url}}"></iframe>
+                                        <video width="90%" height="240" controls>
+                                            <source src="{{video_info.url}}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
                                         {% endif %}
                                     {% endfor %}
                                 {% endif %}
@@ -261,7 +268,10 @@
                                 {% if search.media.0.type == 'video' %}
                                     {% for video_info in search.media.0.video_info.variants %}
                                         {% if video_info.bitrate == 832000 and video_info.content_type == 'video/mp4' %}
-                                        <iframe id="video" width="90%;" frameborder="0" src="{{video_info.url}}"></iframe>
+                                        <video width="90%" height="240" controls>
+                                            <source src="{{video_info.url}}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
                                         {% endif %}
                                     {% endfor %}
                                 {% endif %}
@@ -293,9 +303,11 @@
 
     <hr>
     {% block footer %}
+    <div class="container">
     <footer class="footer">
-        Made By <a href="">Ty Knott</a> with
+        Made By <a href="">Ty Knott</a> with<img style="height:35px;" src="{% static 'trends/img/heart.gif' %}">
     </footer>
+    </div>
     {% endblock %}
 
     {% block js %}
