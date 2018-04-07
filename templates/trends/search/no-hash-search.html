@@ -4,26 +4,25 @@
 <!--                CONTAINER LEFT | USERS           -->
     <div class="container">
     {% block content %}
-        <div class="row">
-            <div class="col">
-                <h3>Users</h3>
-                <p>Users about {{user_search}}</p>
-                <a href="user/{{user_sug.screen_name}}">
-                    {{user_sug}}
+        <h3>Users</h3>
+        <p>Users related to <strong>{{user_search}}</strong></p>
+        <div class="user-suggestions">
+            {% for users in user_sug %}
+            <section class="user-info">
+                <span id="user-img"><img src="{{users.profile_image_url}}"></span>
+                <a href="{% url 'users' user_name=users.screen_name %}">
+                    <div id="username-info">
+                        <span id="name">{{users.name}}</span>
+                        <br>
+                        <span style="color:black;" id="username"><b>@{{users.screen_name}}</b></span>
+                        {% if users.verified %}
+                        <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
+                        {% endif %}
+                    </div>
                 </a>
-            </div>
+            </section>
+            {% endfor %}
         </div>
-        <section class="user-info container">
-            <span id="user-img"><img src="{{user_sug.profile_image_url}}"></span>
-            <div id="username-info">
-                <span id="name">{{user_sug.name}}</span>
-                <br>
-                <span id="username"><b>@{{user_sug.screen_name}}</b></span>
-                {% if user_sug.verified %}
-                <img id="verified-badge" style="width:20px;" src="{% static 'trends/img/verified.png' %}">
-                {% endif %}
-            </div>
-        </section>
     {% endblock %}
     </div>
 <!--                ----------             -->
