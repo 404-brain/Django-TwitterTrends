@@ -1,9 +1,11 @@
 # Django-TwitterTrends
 
-A site showing latest twitter trends using the twitter api.
+A Django 2 web app showing latest twitter trends using the twitter api.
+
+Live site: https://twittertrendss.herokuapp.com/
 
 # Technologies
 
 - Django 2.0
 - python-twitter
-- Bootstrap
+- Twitter Bootstrap 3
